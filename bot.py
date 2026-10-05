@@ -4,43 +4,43 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
 
 FACTS = [
-    "⚽ The first FIFA World Cup was held in Uruguay in 1930.",
-    "🏀 Basketball was invented by James Naismith in 1891.",
-    "🎾 Wimbledon is the oldest tennis tournament in the world, first held in 1877.",
-    "🏃 The marathon distance is officially 42.195 kilometres.",
-    "🏊 Michael Phelps won 28 Olympic medals, including 23 gold medals.",
-    "⚽ Brazil has won the FIFA World Cup more times than any other men's national team.",
-    "🏀 The NBA was founded in 1946 as the Basketball Association of America before becoming the NBA in 1949.",
-    "🎾 The four Grand Slam tennis tournaments are the Australian Open, French Open, Wimbledon, and US Open.",
-    "🏎️ Formula 1's first World Championship race was held at Silverstone in 1950.",
-    "🥊 Boxing was included in the ancient Olympic Games.",
-    "🏉 Rugby is named after Rugby School in Warwickshire, England.",
-    "🏏 A standard cricket team has 11 players.",
-    "⚽ A standard football match is played with two 45-minute halves, subject to added time.",
-    "🏀 The original basketball game used a peach basket as the goal.",
-    "🎾 The term 'love' is traditionally used for a score of zero in tennis.",
-    "🏅 The modern Olympic Games began in Athens in 1896.",
-    "⛳ A standard round of golf consists of 18 holes.",
-    "🏐 Volleyball was originally called 'mintonette' when it was invented in 1895.",
-    "⚽ The word 'soccer' originated as an abbreviation of 'association football'.",
-    "🏓 Table tennis was developed in England as an indoor version of lawn tennis.",
+    "⚽ ព្រឹត្តិការណ៍ FIFA World Cup លើកដំបូងបានធ្វើឡើងនៅប្រទេសអ៊ុយរូហ្គាយក្នុងឆ្នាំ 1930។",
+    "🏀 កីឡាបាល់បោះត្រូវបានបង្កើតឡើងដោយ James Naismith ក្នុងឆ្នាំ 1891។",
+    "🎾 Wimbledon គឺជាការប្រកួតកីឡាវាយកូនបាល់ចាស់ជាងគេបំផុតក្នុងពិភពលោក ដែលចាប់ផ្តើមនៅឆ្នាំ 1877។",
+    "🏃 ចម្ងាយម៉ារ៉ាតុងផ្លូវការគឺ 42.195 គីឡូម៉ែត្រ។",
+    "🏊 Michael Phelps ឈ្នះមេដាយអូឡាំពិកសរុប 28 គ្រឿង ក្នុងនោះមានមេដាយមាស 23 គ្រឿង។",
+    "⚽ ប្រទេសប្រេស៊ីលជាក្រុមជម្រើសជាតិបុរសដែលឈ្នះ FIFA World Cup បានច្រើនជាងគេ។",
+    "🏀 NBA ត្រូវបានបង្កើតឡើងក្នុងឆ្នាំ 1946 ហើយដំបូងមានឈ្មោះថា Basketball Association of America មុនពេលក្លាយជា NBA ក្នុងឆ្នាំ 1949។",
+    "🎾 ការប្រកួត Grand Slam កីឡាវាយកូនបាល់ទាំង 4 គឺ Australian Open, French Open, Wimbledon និង US Open។",
+    "🏎️ ការប្រកួតជើងឯកពិភពលោក Formula 1 លើកដំបូងបានធ្វើឡើងនៅ Silverstone ក្នុងឆ្នាំ 1950។",
+    "🥊 កីឡាប្រដាល់ត្រូវបានដាក់បញ្ចូលក្នុងកីឡាអូឡាំពិកបុរាណ។",
+    "🏉 ឈ្មោះកីឡា Rugby មានប្រភពមកពី Rugby School នៅ Warwickshire ប្រទេសអង់គ្លេស។",
+    "🏏 ក្រុមកីឡាគ្រីឃីតស្តង់ដារមួយមានកីឡាករ 11 នាក់។",
+    "⚽ ការប្រកួតបាល់ទាត់ស្តង់ដារមួយមាន 2 តង់ ដែលមួយតង់មាន 45 នាទី មិនរាប់បញ្ចូលម៉ោងបន្ថែម។",
+    "🏀 ការប្រកួតបាល់បោះដំបូងគេប្រើកន្ត្រកផ្លែប៉េសជាគោលដៅ។",
+    "🎾 ពាក្យ «love» ត្រូវបានប្រើជាប្រពៃណី ដើម្បីបង្ហាញពិន្ទុសូន្យក្នុងកីឡាវាយកូនបាល់។",
+    "🏅 កីឡាអូឡាំពិកសម័យទំនើបបានចាប់ផ្តើមនៅទីក្រុង Athens ក្នុងឆ្នាំ 1896។",
+    "⛳ ការលេងកីឡាវាយកូនហ្គោលមួយជុំស្តង់ដារមាន 18 រន្ធ។",
+    "🏐 កីឡាបាល់ទះដំបូងត្រូវបានហៅថា «mintonette» នៅពេលបង្កើតឡើងក្នុងឆ្នាំ 1895។",
+    "⚽ ពាក្យ «soccer» មានប្រភពមកពីពាក្យកាត់នៃ «association football»។",
+    "🏓 កីឡាវាយកូនឃ្លីលើតុត្រូវបានអភិវឌ្ឍនៅប្រទេសអង់គ្លេស ជាកំណែខាងក្នុងនៃកីឡាវាយកូនបាល់លើវាលស្មៅ។",
 ]
 
 def keyboard():
     return InlineKeyboardMarkup([
-        [InlineKeyboardButton("🧠 Sports Fact", callback_data="fact")],
-        [InlineKeyboardButton("🔄 Another Fact", callback_data="fact")],
+        [InlineKeyboardButton("🧠 ចំណេះដឹងកីឡា", callback_data="fact")],
+        [InlineKeyboardButton("🔄 ចំណេះដឹងមួយទៀត", callback_data="fact")],
     ])
 
 def fact_message():
-    return f"🧠 <b>Sports Fact</b>\n\n{random.choice(FACTS)}"
+    return f"🧠 <b>ចំណេះដឹងកីឡា</b>\n\n{random.choice(FACTS)}"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
-        "🏟️ <b>SB Sports Facts</b>\n\n"
-        "Discover interesting facts from the world of sports.\n\n"
-        "No scores. No betting. Just sports facts.\n\n"
-        "Tap below to get started."
+        "🏟️ <b>ចំណេះដឹងកីឡា SB</b>\n\n"
+        "ស្វែងយល់អំពីចំណេះដឹងគួរឱ្យចាប់អារម្មណ៍ពីពិភពកីឡា។\n\n"
+        "គ្មានលទ្ធផលប្រកួត។ គ្មានការភ្នាល់។ មានតែចំណេះដឹងកីឡា។\n\n"
+        "ចុចប៊ូតុងខាងក្រោមដើម្បីចាប់ផ្តើម។"
     )
     await update.message.reply_text(text, parse_mode="HTML", reply_markup=keyboard())
 
