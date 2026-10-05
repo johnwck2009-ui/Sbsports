@@ -37,10 +37,9 @@ def fact_message():
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
-        "🏟️ <b>ចំណេះដឹងកីឡា SB</b>\n\n"
-        "ស្វែងយល់អំពីចំណេះដឹងគួរឱ្យចាប់អារម្មណ៍ពីពិភពកីឡា។\n\n"
-        "គ្មានលទ្ធផលប្រកួត។ គ្មានការភ្នាល់។ មានតែចំណេះដឹងកីឡា។\n\n"
-        "ចុចប៊ូតុងខាងក្រោមដើម្បីចាប់ផ្តើម។"
+        "🧠 <b>សូមស្វាគមន៍មកកាន់ Sportfact!</b>\n\n"
+        "ស្វែងយល់ពីចំណេះដឹងកីឡាដែលគួរឱ្យចាប់អារម្មណ៍ និងសាកល្បងចំណេះដឹងរបស់អ្នក។\n\n"
+        "ចុចប៊ូតុងខាងក្រោម ដើម្បីចាប់ផ្តើម។"
     )
     await update.message.reply_text(text, parse_mode="HTML", reply_markup=keyboard())
 
